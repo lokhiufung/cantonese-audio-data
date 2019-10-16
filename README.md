@@ -1,5 +1,5 @@
-# cantonese-audio-data
-List of publicly available cantonese audio samples. Script for scripting those samples 
+# cantonese-audio-data (**FOR RESEARCH PURPOSE ONLY!**)
+List of publicly available cantonese audio samples. Script for scripting those samples
 
 
 ## TODO
