@@ -32,10 +32,11 @@ def main():
     else:
         download_dir = arg.dir
 
-    download_helper = mapper[name](name, BASE_URL, download_dir)
+    
 
     params = {}
     if name == 'rthk':
+        download_helper = mapper[name](name, BASE_URL, download_dir)
         start_date = arg.start
         end_date = arg.end
         dates = utils.get_dates(start_date, end_date)
@@ -57,6 +58,10 @@ def main():
                     except Exception as exe:
                         print('download.py')
                         traceback.print_tb(exe.__traceback__)
+    elif name == 'youtube':
+        download_helper = mapper[name](name, BASE_URL, download_dir, API_KEY)
+        for channel_id in YOUTUBE_CHANNEL_ID:
+            download_helper.download(channel_id)
               
 
 

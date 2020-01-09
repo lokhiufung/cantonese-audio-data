@@ -18,15 +18,16 @@ class RthkDownloader(Downloader):
         filename_m4a = self.download_dir + '/' + channel + date + '.m4a'
         filename_mp3 = self.download_dir + '/' + channel + date + '.mp3'
 
-        if not self._is_file_exist(filename_m4a) or not self._is_file_exist(filename_mp3):
+        if not (self._is_file_exist(filename_m4a) or self._is_file_exist(filename_mp3)):
             try:
                 url_m4a = base_url + '/m4a/' + date + '.m4a'
                 self._handle_request(url_m4a, filename_m4a)
             except EndPointNotFoundException:
-                url_mp3 = base_url + '/mp3/' + date + '.mp3'
-                self._handle_request(url_mp3, filename_mp3)
-            except Exception as exe:
-                self._error_handler(exe)
+                try:
+                    url_mp3 = base_url + '/mp3/' + date + '.mp3'
+                    self._handle_request(url_mp3, filename_mp3)
+                except Exception as exe:
+                    self._error_handler(exe)
                 
 
     def _handle_request(self, url, filename):
