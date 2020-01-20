@@ -4,20 +4,23 @@ from .downloader import Downloader
 
 
 class YoutubeDownloader(Downloader):
-    def __init__(self, name, base_url_dict, download_dir, api_key):
+    def __init__(self, name, base_url_dict, download_dir, api_key, n_per_playlist):
         super().__init__(name, base_url_dict, download_dir)
-        self.api_key = 'AIzaSyCJRXitIZDyOny8iecSVrFRTqZGVKpHFOQ'
+        self.api_key = api_key
+        self.n_per_playlist = n_per_playlist
         self.api_url = 'https://www.googleapis.com/youtube/v3/playlists?part=id&key={api_key}'.format(api_key=api_key) 
         self.playlist_ids = []
 
-    def download(self, channel_id):
-        playlist_ids = self._get_playlist_ids(channel_id)
-        for playlist_id in playlist_ids:
-            url = self.base_url_dict['youtube']['playlist'] + playlist_id
-            cmd = ['youtube-dl', '--extract-audio', '--audio-format', 'wav', '-o', '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s', '--prefer-ffmpeg', '--sub-lang', 'zh-hk', '--write-sub', '--write-auto-sub',  url]
-            subprocess.Popen(cmd)
+    def download(self, playlist_id):
+        # playlist_ids = self._get_playlist_ids(channel_id)
+        # for playlist_id in playlist_ids:
+        url = self.base_url_dict['youtube']['playlist'] + playlist_id
+        # temp
+        # -i: ignore error
+        cmd = ['youtube-dl', '-i', '--extract-audio', '--max-downloads', str(self.n_per_playlist), '--playlist-start', str(235), '--audio-format', 'wav', '-o', '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s', '--prefer-ffmpeg', '--sub-lang', 'zh-hk', '--write-sub', '--write-auto-sub',  url]
+        subprocess.Popen(cmd)
             
-    
+    @DeprecationWarning
     def _get_playlist_ids(self, channel_id):
         url = self.api_url + '&channelId={channel_id}'.format(channel_id=channel_id)
         response = self.sess.get(url)

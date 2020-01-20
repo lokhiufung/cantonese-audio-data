@@ -3,3 +3,5 @@ __pycache__/
 */__pycache__/
 test.py
 config.py
+
+config.json

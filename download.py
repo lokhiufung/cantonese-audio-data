@@ -12,12 +12,14 @@ def main():
     python download.py -n rthk -s 2019-09-01 -e 2019-09-30
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--name', type=str, help='name of source')
+    parser.add_argument('-n', '--name', type=str, help='name of source', required=True)
     parser.add_argument('-c', '--channels', type=str, help='name of auido channels', default='all')
     parser.add_argument('-d', '--dir', type=str, help='directory for downloaded files')
     # only for rthk
     parser.add_argument('-s', '--start', type=str, help='start date')
     parser.add_argument('-e', '--end', type=str, help='end date')
+
+    parser.add_argument('--n_speaker', type=int, help='number of speakers in the youtube channel', default=2)
 
     arg = parser.parse_args()
     name = arg.name
@@ -32,7 +34,7 @@ def main():
     else:
         download_dir = arg.dir
 
-    
+    n_speaker = arg.n_speaker
 
     params = {}
     if name == 'rthk':
@@ -59,9 +61,10 @@ def main():
                         print('download.py')
                         traceback.print_tb(exe.__traceback__)
     elif name == 'youtube':
-        download_helper = mapper[name](name, BASE_URL, download_dir, API_KEY)
-        for channel_id in YOUTUBE_CHANNEL_ID:
-            download_helper.download(channel_id)
+        download_helper = mapper[name](name, BASE_URL, download_dir, api_key=GOOGLE_API_KEY, n_per_playlist=N_PER_PLAYLIST)
+        playlist_ids = MULTI_SPEAKER_PLAYLIST if n_speaker > 1 else SINGLE_SPEAKER_PLAYLIST
+        for playlist_id in playlist_ids:
+            download_helper.download(playlist_id)
               
 
 

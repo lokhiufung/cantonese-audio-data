@@ -1,5 +1,17 @@
+import logging
+from logging import FileHandler, StreamHandler, Formatter
 from datetime import date, timedelta
 
+import config
+
+LOG_DIR = config.LOG_DIR
+LOG_LV_MAPPER = {
+    'info': logging.INFO,
+    'debug': logging.DEBUG,
+    'warning': logging.WARNING,
+    'error': logging.ERROR,
+    'critical': logging.CRITICAL
+}
 
 def get_dates(start_date, end_date):
     y_start, m_start, d_start = start_date.split('-')
@@ -11,3 +23,19 @@ def get_dates(start_date, end_date):
 
     date_list = [str(d1 + timedelta(i)) for i in range(delta.days + 1)]
     return date_list
+
+
+def get_logger(name, fh_lv='debug', ch_lv='error', logger_lv='debug'):
+    logger = logging.getLogger(name)
+    logger.setLevel(LOG_LV_MAPPER[logger_lv])  # set log level of logger
+
+    fh = FileHandler(LOG_DIR + '/' + name + '.log')  
+    ch = StreamHandler()
+    formatter = Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    fh.setLevel(LOG_LV_MAPPER[fh_lv])  # set log level of filehandler
+    ch.setLevel(LOG_LV_MAPPER[ch_lv])
+    logger.addHandler(fh)  # set log level of streamhandler
+    logger.addHandler(ch)
+    return logger
