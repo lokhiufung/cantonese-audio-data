@@ -33,5 +33,5 @@ SINGLE_SPEAKER_PLAYLIST = [
 ]
 
 MULTI_SPEAKER_PLAYLIST = [
-    'PLgXqBxHR_4lGSG_cersOqgUdP5s4Drpjv'
+    'PLgXqBxHR_4lGSG_cersOqgUdP5s4Drpjv', 'PLBtDO8vnUizqx1PuC8TvxOXEXyi0CrJRM'
 ]
