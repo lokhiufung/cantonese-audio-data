@@ -2,6 +2,6 @@ __pycache__/
 .vscode/
 */__pycache__/
 test.py
-config.py
+# config.py
 
 config.json

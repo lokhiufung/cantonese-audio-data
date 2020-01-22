@@ -29,7 +29,9 @@ YOUTUBE_CHANNEL_ID = []
 
 # burn hill single person audio
 SINGLE_SPEAKER_PLAYLIST = [
-    'PLPY0_ooDN1dvcLtOF55XqTIP_CnCcLbeg'
+    'PLPY0_ooDN1dvcLtOF55XqTIP_CnCcLbeg', 'PLY2pQYsFrfMP0jUmqK96S1JxM2ECo_dcb' 
 ]
 
-MULTI_SPEAKER_PLAYLIST = []
+MULTI_SPEAKER_PLAYLIST = [
+    'PLgXqBxHR_4lGSG_cersOqgUdP5s4Drpjv'
+]
