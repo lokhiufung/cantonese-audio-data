@@ -39,3 +39,18 @@ def get_logger(name, fh_lv='debug', ch_lv='error', logger_lv='debug'):
     logger.addHandler(fh)  # set log level of streamhandler
     logger.addHandler(ch)
     return logger
+
+
+def get_jyutping_from_api(char):
+    import requests
+    from bs4 import BeautifulSoup
+    
+    base_url = 'https://jyut.net/query'
+    data = '?q=' + char
+    endpoint = base_url + data
+    response = requests.get(endpoint)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    tag = soup.find('span', class_='jyutping')
+
+    return tag.string
+

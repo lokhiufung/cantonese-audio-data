@@ -3,5 +3,7 @@ __pycache__/
 */__pycache__/
 test.py
 # config.py
+/log
 
 config.json
+results.txt

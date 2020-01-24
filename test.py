@@ -1,22 +1,16 @@
-# import requests
-# import pprint
+from utils import get_jyutping_from_api, get_logger
 
-# api_key = 'AIzaSyCJRXitIZDyOny8iecSVrFRTqZGVKpHFOQ'
-# channel_id = 'UCKkrzIj3tAzLEVNvbc6PTZA'
-# sess = requests.Session()
-# url = 'https://www.googleapis.com/youtube/v3/playlists?part=id&channelId={channel_id}&key={api_key}'.format(channel_id=channel_id, api_key=api_key)
- 
+logger = get_logger('jyutping', fh_lv='debug', ch_lv='error', logger_lv='debug')
+missing_chars = {'撚', '蹟', '昶', '槿', '彊', '硤', '髀', '樑', '痾', '唪', '煬', '閑', '裏', '嘭', '㗎', '烚', '鷓', '㖭', '琨', '喼', '唔', '萼', '喺', '嘢', '砲', '嚙', '曱', '喎', '鎚', '鴣', '揼', '噃', '幪', '阪', '冚', '睇', '諗', '乜', '攰', '呔', '㩒', '慳', '嗌', '鎔', '邨', '&', '嘥', '煒', '脷', '啖', '証', '埗', '噏', '鏵', '嚿', '暐', '喳', '啫', '祚', '喑', '潯', '咩', '掟', '攞', '哋', '咗', '嗰', '咁', '佢', '嗱', '𨋢', '啱', '偈', '梘', '槤', '戥', '韞', '衞', '掹', '抆', '嘆', '畀', '孭', '喐', '嘅', '糉', '劏', '孖', '揸', '氹', '檯', '煲', '叻', '埸', '撳', '呃', '黐', '櫈', '饑', '盃', '濠', '瞓', '嚟', '剷', '甴', '鈎', '薌', '冇', '壆', '軚', '屙', '冧', '啲', '瑭', '臺', '拎', '俾', '唥', '嬲'}
 
-# def get():
-#     response = sess.get(url)
-#     if response.status_code == 200:
-#         return response.json()
-#     else:
-#         error_handler(response)
+outputs = []
+for char in missing_chars:
+    try:
+        result = get_jyutping_from_api(char)
+        outputs.append(char + ' ' + result)
+    except:
+        logger.error(char)
 
-# def parse_playlist_list(json_):
-#     return [item['id'] for item in json_['items']]
-
-# json_ = get().json()
-# playlist = parse_playlist_list(json_)
-# print(playlist)
+content = '\n'.join(outputs)
+with open('results.txt', 'w') as f:
+    f.write(content)    
